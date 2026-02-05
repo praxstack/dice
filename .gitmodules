@@ -1,0 +1,3 @@
+[submodule "modules/dicedb-spill"]
+	path = modules/dicedb-spill
+	url = git@github.com:dicedb/dicedb-spill
