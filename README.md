@@ -15,8 +15,9 @@ The quickest and easiest way to start using DiceDB is with the official Docker i
 
 ```bash
 docker run \
-  --name dicedb-1 -p 6379:6379 -v $(pwd)/data:/data/ \
-  dicedb:latest
+    --name dicedb-001 \
+    -p 6379:6379 -v $(pwd)/data:/data/ \
+    dicedb/dicedb
 ```
 
 This command starts a DiceDB container with the `spill` module already enabled. By default, the spill module uses RocksDB and is configured with a maximum memory limit of 250MB.
@@ -27,19 +28,31 @@ If you prefer not to use the defaults and want to explicitly [configure DiceDB](
 
 ```bash
 docker run \
-  --name dicedb-1 -p 6379:6379 -v $(pwd)/data:/data/ \
-  dicedb:latest \
-  dicedb-server \
-  --port 6379 \
-  --maxmemory 500mb \
-  --protected-mode no \
-  --loadmodule /usr/local/lib/lib-spill.so path /data/spill/ max-memory 262144000
+    --name dicedb-001 \
+    -p 6379:6379 -v $(pwd)/data:/data/ \
+    dicedb/dicedb \
+    dicedb-server \
+      --port 6379 \
+      --maxmemory 500mb \
+      --protected-mode no
 ```
 
 This configuration sets:
 
 - DiceDB max memory limit to 500MB
 - Spill memory limit to 250MB
+
+## Running First Command
+
+Once the container is running, connect to it, run the DiceDB CLI, and execute the commands.
+
+```bash
+$ docker exec -it dicedb-001 dicedb-cli
+> ping
+> set foo bar
+> get foo
+> incr counter
+```
 
 ## What's Different
 
@@ -97,18 +110,6 @@ Example:
 > get foo
 > incr counter
 ```
-
-## Sponsors
-
-We are incredibly grateful to our sponsor(s) for their generous support, which makes the development of DiceDB possible.
-
-<a href="https://www.coderabbit.ai/?utm_source=github&utm_medium=social&utm_campaign=sponsor&utm_term=dicedb">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://www.coderabbit.ai/images/logo-white.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://www.coderabbit.ai/images/logo-orange.svg">
-    <img alt="CodeRabbit" src="https://www.coderabbit.ai/images/logo-orange.svg" width="240">
-  </picture>
-</a>
 
 ## Support
 
